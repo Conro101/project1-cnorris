@@ -1,0 +1,21 @@
+1. login
+    -send request with username and password
+        -get an account ID back and manager status
+1a. register
+    -send request with username and password
+    -check if username exists for a user already
+        -create new entry if it does not, default to employee
+2. menu
+    -if employee, send ticket
+        -sends a request with amount, description, and pending status
+        -[STRETCH: type of request (travel, lodging, food, other)]
+        -[STRETCH: attach image of receipt]
+    -if employee, view sent tickets
+        -list of tickets returned by DB should only contain tickets sent by username
+        -[STRETCH: filter tickets by request type, as implemented above]
+    -if manager, view all pending tickets
+        -select a ticket
+        -change status to approved or denied
+    -[STRETCH: User information (name, address, etc.]
+    -[STRETCH: users can edit account info]
+    -[STRETCH: users can add profile picture]
