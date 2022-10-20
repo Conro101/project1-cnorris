@@ -24,11 +24,10 @@ public class TicketServiceImpl implements TicketService{
         if(Driver.currentEmployee == null){
             throw new RuntimeException("User is not logged in!");
         }
-        if(Driver.currentEmployee.isManager() == true){
+        if(Driver.currentEmployee.isManager()){
             throw new RuntimeException("Managers cannot log tickets!");
         }
-        Ticket savedTicket = this.ticketDAO.createTicket(ticket);
-        return savedTicket;
+        return this.ticketDAO.createTicket(ticket);
     }
 
     @Override
@@ -44,7 +43,7 @@ public class TicketServiceImpl implements TicketService{
         if (Driver.currentEmployee == null){
             throw new RuntimeException("User is not logged in!");
         }
-        if(Driver.currentEmployee.isManager() != true){
+        if(!Driver.currentEmployee.isManager()){
             throw new RuntimeException("Only managers can get all tickets!");
         }
         return this.ticketDAO.getAllTickets();
@@ -55,7 +54,7 @@ public class TicketServiceImpl implements TicketService{
         if (Driver.currentEmployee == null){
             throw new RuntimeException("Only users can get tickets!");
         }
-        if(Driver.currentEmployee.isManager() != true){
+        if(!Driver.currentEmployee.isManager()){
             throw new RuntimeException("Only managers can get all tickets!");
         }
         return this.ticketDAO.getAllTicketsByFilter(filter);
@@ -82,7 +81,7 @@ public class TicketServiceImpl implements TicketService{
         if (Driver.currentEmployee == null){
             throw new RuntimeException("User is not logged in!");
         }
-        if(Driver.currentEmployee.isManager() != true){
+        if(!Driver.currentEmployee.isManager()){
             throw new RuntimeException("Only managers can update tickets!");
         }
         return this.ticketDAO.updateTicket(ticket);
@@ -93,7 +92,7 @@ public class TicketServiceImpl implements TicketService{
         if (Driver.currentEmployee == null){
             throw new RuntimeException("User is not logged in!");
         }
-        if(Driver.currentEmployee.isManager() != true){
+        if(!Driver.currentEmployee.isManager()){
             throw new RuntimeException("Only managers can update tickets!");
         }
         return this.ticketDAO.deleteTicketById(id);

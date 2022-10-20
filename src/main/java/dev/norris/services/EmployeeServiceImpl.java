@@ -19,8 +19,7 @@ public class EmployeeServiceImpl implements EmployeeService{
         if(employee.getPassword().length() == 0){
             throw new RuntimeException("Employee password must not be blank!");
         }
-        Employee savedEmployee = this.employeeDAO.createEmployee(employee);
-        return savedEmployee;
+        return this.employeeDAO.createEmployee(employee);
     }
 
     @Override
@@ -50,12 +49,23 @@ public class EmployeeServiceImpl implements EmployeeService{
         if(employee.getPassword().length() == 0){
             throw new RuntimeException("Employee password must not be blank!");
         }
-        Employee savedEmployee = this.employeeDAO.updateEmployee(employee);
-        return savedEmployee;
+        if(Driver.currentEmployee == null){
+            throw new RuntimeException("User is not logged in!");
+        }
+        if(!Driver.currentEmployee.isManager()){
+            throw new RuntimeException("Only managers can update employees!");
+        }
+        return this.employeeDAO.updateEmployee(employee);
     }
 
     @Override
     public boolean deleteEmployeeById(int id) {
+        if(Driver.currentEmployee == null){
+            throw new RuntimeException("User is not logged in!");
+        }
+        if(!Driver.currentEmployee.isManager()){
+            throw new RuntimeException("Only managers can delete employees!");
+        }
         return this.employeeDAO.deleteEmployeeById(id);
     }
 }

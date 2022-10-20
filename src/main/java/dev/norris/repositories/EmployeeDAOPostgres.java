@@ -84,13 +84,38 @@ public class EmployeeDAOPostgres implements EmployeeDAO{
 
     @Override
     public Employee updateEmployee(Employee employee) {
+        try(Connection connection = ConnectionFactory.getConnection()){
+            String sql = "update employees set username = ?, password = ?, manager = ? where id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-        return null;
+            preparedStatement.setString(1, employee.getUsername());
+            preparedStatement.setString(2, employee.getPassword());
+            preparedStatement.setBoolean(3,employee.isManager());
+            preparedStatement.setInt(4,employee.getId());
+
+            preparedStatement.executeUpdate();
+            return employee;
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public boolean deleteEmployeeById(int id) {
+        try(Connection connection = ConnectionFactory.getConnection()){
+            String sql = "delete from employees where id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-        return false;
+            preparedStatement.setInt(1,id);
+
+            preparedStatement.execute();
+            return true;
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
     }
 }

@@ -2,7 +2,6 @@ package dev.norris.repositories;
 
 import dev.norris.entities.Ticket;
 import dev.norris.util.ConnectionFactory;
-import org.eclipse.jetty.util.DateCache;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -178,7 +177,7 @@ public class TicketDAOPostgres implements TicketDAO{
             preparedStatement.setString(4, ticket.getDescription());
             preparedStatement.setInt(5, ticket.getId());
 
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
             return ticket;
         }
         catch (SQLException e){

@@ -42,10 +42,24 @@ public class EmployeeController {
     };
 
     public Handler updateEmployee = (ctx) ->{
-
+        String employeeJson = ctx.body();
+        Gson gson = new Gson();
+        Employee employee = gson.fromJson(employeeJson, Employee.class);
+        Employee updateEmployee = Driver.employeeService.updateEmployee(employee);
+        String json = gson.toJson(updateEmployee);
+        ctx.status(202);
+        ctx.result(json);
     };
 
     public Handler deleteEmployeeById = (ctx) ->{
-
+        int id = Integer.parseInt(ctx.pathParam("id"));
+        boolean result = Driver.employeeService.deleteEmployeeById(id);
+        if (result){
+            ctx.status(204);
+        }
+        else {
+            ctx.status(400);
+            ctx.result("Delete request could not be processed");
+        }
     };
 }
