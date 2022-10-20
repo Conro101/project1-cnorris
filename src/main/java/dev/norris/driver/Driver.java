@@ -28,6 +28,7 @@ public class Driver {
         app.get("/tickets/{id}", ticketController.getTicketById);
         app.get("/tickets/{filter}", ticketController.getAllTicketsByFilter);
         app.get("/employees/tickets/{id}", ticketController.getAllTicketsById);
+        app.get("/employees/tickets/{id}/{filter}", ticketController.getAllTicketsByFilterAndId);
 
         app.put("/employees", employeeController.updateEmployee);
         app.put("/tickets", ticketController.updateTicket);

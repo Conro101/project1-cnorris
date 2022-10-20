@@ -11,6 +11,7 @@ public interface TicketService {
     List<Ticket> getAllTickets();
     List<Ticket> getAllTicketsByFilter(String filter);
     List<Ticket> getAllTicketsById(int id);
+    List<Ticket> getAllTicketsByFilterAndId(String filter, int id);
     Ticket updateTicket(Ticket ticket);
     boolean deleteTicketById(int id);
 }

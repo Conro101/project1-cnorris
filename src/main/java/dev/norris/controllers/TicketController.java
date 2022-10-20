@@ -5,6 +5,8 @@ import dev.norris.driver.Driver;
 import dev.norris.entities.Ticket;
 import io.javalin.http.Handler;
 
+import java.util.List;
+
 public class TicketController {
     //CRUD- Create, Read, Update, Delete
     public Handler createTicket = (ctx) -> {
@@ -19,14 +21,31 @@ public class TicketController {
     public Handler getTicketById = (ctx) ->{
         int id = Integer.parseInt(ctx.pathParam("id"));
         Ticket ticket = Driver.ticketService.getTicketById(id);
+        Gson gson = new Gson();
+        String json = gson.toJson(ticket);
+        ctx.result(json);
     };
     public Handler getAllTickets = (ctx) ->{
-
+        List<Ticket> tickets = Driver.ticketService.getAllTickets();
+        Gson gson = new Gson();
+        String json = gson.toJson(tickets);
+        ctx.result(json);
     };
     public Handler getAllTicketsByFilter = (ctx) ->{
-
+        String filter = ctx.pathParam("filter");
+        List<Ticket> tickets = Driver.ticketService.getAllTicketsByFilter(filter);
+        Gson gson = new Gson();
+        String json = gson.toJson(tickets);
+        ctx.result(json);
     };
     public Handler getAllTicketsById = (ctx) ->{
+        int id = Integer.parseInt(ctx.pathParam("id"));
+        List<Ticket> tickets = Driver.ticketService.getAllTicketsById(id);
+        Gson gson = new Gson();
+        String json = gson.toJson(tickets);
+        ctx.result(json);
+    };
+    public Handler getAllTicketsByFilterAndId = ctx ->{
 
     };
     public Handler updateTicket = (ctx) ->{
