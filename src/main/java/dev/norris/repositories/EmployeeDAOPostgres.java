@@ -42,15 +42,20 @@ public class EmployeeDAOPostgres implements EmployeeDAO{
             preparedStatement.setString(2, employee.getPassword());
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
+            if(!resultSet.isBeforeFirst()){
+                resultSet.next();
 
-            Employee loggedEmployee = new Employee();
-            loggedEmployee.setId(resultSet.getInt("id"));
-            loggedEmployee.setUsername(resultSet.getString("username"));
-            loggedEmployee.setPassword(resultSet.getString("password"));
-            loggedEmployee.setManager(resultSet.getBoolean("manager"));
-            Driver.currentEmployee = loggedEmployee;
-            return true;
+                Employee loggedEmployee = new Employee();
+                loggedEmployee.setId(resultSet.getInt("id"));
+                loggedEmployee.setUsername(resultSet.getString("username"));
+                loggedEmployee.setPassword(resultSet.getString("password"));
+                loggedEmployee.setManager(resultSet.getBoolean("manager"));
+                Driver.currentEmployee = loggedEmployee;
+                return true;
+            }else {
+                return false;
+            }
+
         }
         catch (SQLException e){
             e.printStackTrace();
