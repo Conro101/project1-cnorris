@@ -1,8 +1,8 @@
-package dev.norris.repositories;
+package dev.norris.services;
 
 import dev.norris.entities.Employee;
 
-public interface EmployeeDAO {
+public interface EmployeeService {
     //CRUD- Create, Read, Update, Delete
     Employee createEmployee(Employee employee);
     Employee getEmployeeById(int id);

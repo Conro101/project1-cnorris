@@ -1,10 +1,10 @@
-package dev.norris.repositories;
+package dev.norris.services;
 
 import dev.norris.entities.Ticket;
 
 import java.util.List;
 
-public interface TicketDAO {
+public interface TicketService {
     //CRUD- Create, Read, Update, Delete
     Ticket createTicket(Ticket ticket);
     Ticket getTicketById(int id);
