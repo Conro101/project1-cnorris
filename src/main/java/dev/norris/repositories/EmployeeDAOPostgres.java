@@ -10,10 +10,9 @@ public class EmployeeDAOPostgres implements EmployeeDAO{
     @Override
     public Employee createEmployee(Employee employee) {
         try(Connection connection = ConnectionFactory.getConnection()){
-            //INSERT INTO employee VALUES ("jsmith","password",false);
-            String sql = "insert into employee values(default, ?, ?, ?)";
+            //INSERT INTO employee VALUES (DEFAULT, "jsmith","password",false);
+            String sql = "insert into employees values(default, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
             preparedStatement.setString(1, employee.getUsername());
             preparedStatement.setString(2, employee.getPassword());
             preparedStatement.setBoolean(3, employee.isManager());
@@ -43,7 +42,7 @@ public class EmployeeDAOPostgres implements EmployeeDAO{
     }
 
     @Override
-    public boolean deleteEmployeeByUsername(String username) {
+    public boolean deleteEmployeeById(int id) {
         return false;
     }
 }

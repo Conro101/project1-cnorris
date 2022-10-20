@@ -11,9 +11,14 @@ public class TicketController {
         String json = ctx.body();
         Gson gson = new Gson();
         Ticket ticket = gson.fromJson(json, Ticket.class);
+        Ticket registeredTicket = Driver.ticketService.createTicket(ticket);
+        String ticketJson = gson.toJson(registeredTicket);
+        ctx.status(201);
+        ctx.result(ticketJson);
     };
     public Handler getTicketById = (ctx) ->{
-
+        int id = Integer.parseInt(ctx.pathParam("id"));
+        Ticket ticket = Driver.ticketService.getTicketById(id);
     };
     public Handler getAllTickets = (ctx) ->{
 
@@ -21,7 +26,7 @@ public class TicketController {
     public Handler getAllTicketsByFilter = (ctx) ->{
 
     };
-    public Handler getAllTicketsByUsername = (ctx) ->{
+    public Handler getAllTicketsById = (ctx) ->{
 
     };
     public Handler updateTicket = (ctx) ->{

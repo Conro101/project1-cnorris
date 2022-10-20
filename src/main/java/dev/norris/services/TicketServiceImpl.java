@@ -14,7 +14,14 @@ public class TicketServiceImpl implements TicketService{
 
     @Override
     public Ticket createTicket(Ticket ticket) {
-        return null;
+        if(ticket.getAmount() <= 0.00){
+            throw new RuntimeException("Ticket must have a positive value!");
+        }
+        if(ticket.getUsername().length() == 0){
+            throw new RuntimeException("Ticket must be attached to a user!");
+        }
+        Ticket savedTicket = this.ticketDAO.createTicket(ticket);
+        return savedTicket;
     }
 
     @Override
@@ -33,7 +40,7 @@ public class TicketServiceImpl implements TicketService{
     }
 
     @Override
-    public List<Ticket> getAllTicketsByUsername(String username) {
+    public List<Ticket> getAllTicketsById(int id) {
         return null;
     }
 

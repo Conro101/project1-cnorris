@@ -21,7 +21,7 @@ public class EmployeeController {
 
     };
 
-    public Handler deleteEmployeeByUsername = (ctx) ->{
+    public Handler deleteEmployeeById = (ctx) ->{
 
     };
 }

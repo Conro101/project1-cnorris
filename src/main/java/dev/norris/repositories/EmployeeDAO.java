@@ -7,5 +7,5 @@ public interface EmployeeDAO {
     Employee createEmployee(Employee employee);
     Employee getEmployeeById(int id);
     Employee updateEmployee(Employee employee);
-    boolean deleteEmployeeByUsername(String username);
+    boolean deleteEmployeeById(int id);
 }

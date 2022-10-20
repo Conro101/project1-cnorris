@@ -11,12 +11,12 @@ public class TicketDAOPostgres implements TicketDAO{
     public Ticket createTicket(Ticket ticket) {
         try(Connection connection = ConnectionFactory.getConnection()){
             //INSERT INTO ticket VALUES (DEFAULT, 10.00, "jsmith", "Pending", "Bought Lunch");
-            String sql = "insert into books values(default, ?, ?, ?, ?)";
+            String sql = "insert into tickets values(default, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setDouble(1, ticket.getAmount());
             preparedStatement.setString(2, ticket.getUsername());
             preparedStatement.setString(3, ticket.getStatus());
-            preparedStatement.setString(4, ticket.getStatus());
+            preparedStatement.setString(4, ticket.getDescription());
 
             preparedStatement.execute();
 
@@ -48,7 +48,7 @@ public class TicketDAOPostgres implements TicketDAO{
     }
 
     @Override
-    public List<Ticket> getAllTicketsByUsername(String username) {
+    public List<Ticket> getAllTicketsById(int id) {
         return null;
     }
 

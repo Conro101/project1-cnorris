@@ -10,7 +10,7 @@ public interface TicketDAO {
     Ticket getTicketById(int id);
     List<Ticket> getAllTickets();
     List<Ticket> getAllTicketsByFilter(String filter);
-    List<Ticket> getAllTicketsByUsername(String username);
+    List<Ticket> getAllTicketsById(int id);
     Ticket updateTicket(Ticket ticket);
     boolean deleteTicketById(int id);
 }

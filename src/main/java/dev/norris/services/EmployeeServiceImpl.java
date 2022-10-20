@@ -40,7 +40,7 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public boolean deleteEmployeeByUsername(String username) {
-        return this.employeeDAO.deleteEmployeeByUsername(username);
+    public boolean deleteEmployeeById(int id) {
+        return this.employeeDAO.deleteEmployeeById(id);
     }
 }
