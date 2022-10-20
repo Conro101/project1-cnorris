@@ -11,13 +11,13 @@ import java.util.List;
 public class TicketController {
     //CRUD- Create, Read, Update, Delete
     public Handler createTicket = (ctx) -> {
-        String json = ctx.body();
+        String ticketJson = ctx.body();
         Gson gson = new Gson();
-        Ticket ticket = gson.fromJson(json, Ticket.class);
+        Ticket ticket = gson.fromJson(ticketJson, Ticket.class);
         Ticket registeredTicket = Driver.ticketService.createTicket(ticket);
-        String ticketJson = gson.toJson(registeredTicket);
+        String json = gson.toJson(registeredTicket);
         ctx.status(201);
-        ctx.result(ticketJson);
+        ctx.result(json);
     };
     public Handler getTicketById = (ctx) ->{
         int id = Integer.parseInt(ctx.pathParam("id"));

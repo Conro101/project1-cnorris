@@ -1,5 +1,6 @@
 package dev.norris.services;
 
+import dev.norris.driver.Driver;
 import dev.norris.entities.Employee;
 import dev.norris.repositories.EmployeeDAO;
 
@@ -23,12 +24,21 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public Employee loginEmployee(Employee employee){
-        return null;
+    public boolean loginEmployee(Employee employee){
+        if(employee.getUsername().length() == 0){
+            throw new RuntimeException("Employee username must not be blank!");
+        }
+        if(employee.getPassword().length() == 0){
+            throw new RuntimeException("Employee password must not be blank!");
+        }
+        return this.employeeDAO.loginEmployee(employee);
     }
 
     @Override
     public Employee getEmployeeById(int id) {
+        if(Driver.currentEmployee == null){
+            throw new RuntimeException("User is not logged in!");
+        }
         return this.employeeDAO.getEmployeeById(id);
     }
 

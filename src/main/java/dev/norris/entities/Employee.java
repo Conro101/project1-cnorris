@@ -6,16 +6,16 @@ public class Employee {
     private int id;
     private String username;
     private String password;
-    boolean isManager = false;
+    boolean manager = false;
 
     public Employee() {
     }
 
-    public Employee(int id, String username, String password, boolean isManager) {
+    public Employee(int id, String username, String password, boolean manager) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.isManager = isManager;
+        this.manager = manager;
     }
 
     public int getId() {
@@ -43,11 +43,11 @@ public class Employee {
     }
 
     public boolean isManager() {
-        return isManager;
+        return manager;
     }
 
     public void setManager(boolean manager) {
-        isManager = manager;
+        manager = manager;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class Employee {
 
         Employee employee = (Employee) o;
 
-        if (isManager != employee.isManager) return false;
+        if (manager != employee.manager) return false;
         if (!Objects.equals(username, employee.username)) return false;
         return Objects.equals(password, employee.password);
     }
@@ -66,7 +66,7 @@ public class Employee {
     public int hashCode() {
         int result = username != null ? username.hashCode() : 0;
         result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (isManager ? 1 : 0);
+        result = 31 * result + (manager ? 1 : 0);
         return result;
     }
 }

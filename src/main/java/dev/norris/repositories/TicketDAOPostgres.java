@@ -41,15 +41,15 @@ public class TicketDAOPostgres implements TicketDAO{
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1,id);
 
-            ResultSet rs = preparedStatement.executeQuery();
-            rs.next();
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
 
             Ticket ticket = new Ticket();
-            ticket.setId(rs.getInt("id"));
-            ticket.setAmount(rs.getDouble("amount"));
-            ticket.setUsername(rs.getString("username"));
-            ticket.setStatus(rs.getString("status"));
-            ticket.setDescription(rs.getString("description"));
+            ticket.setId(resultSet.getInt("id"));
+            ticket.setAmount(resultSet.getDouble("amount"));
+            ticket.setUsername(resultSet.getString("username"));
+            ticket.setStatus(resultSet.getString("status"));
+            ticket.setDescription(resultSet.getString("description"));
 
             return ticket;
         }
@@ -65,16 +65,16 @@ public class TicketDAOPostgres implements TicketDAO{
             String sql = "select * from tickets";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-            ResultSet rs = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             List<Ticket> ticketList = new ArrayList<>();
-            while(rs.next()){
+            while(resultSet.next()){
                 Ticket ticket = new Ticket();
-                ticket.setId(rs.getInt("id"));
-                ticket.setAmount(rs.getDouble("amount"));
-                ticket.setUsername(rs.getString("username"));
-                ticket.setStatus(rs.getString("status"));
-                ticket.setDescription(rs.getString("description"));
+                ticket.setId(resultSet.getInt("id"));
+                ticket.setAmount(resultSet.getDouble("amount"));
+                ticket.setUsername(resultSet.getString("username"));
+                ticket.setStatus(resultSet.getString("status"));
+                ticket.setDescription(resultSet.getString("description"));
                 ticketList.add(ticket);
             }
             return ticketList;
@@ -92,16 +92,16 @@ public class TicketDAOPostgres implements TicketDAO{
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, filter);
 
-            ResultSet rs = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             List<Ticket> ticketList = new ArrayList<>();
-            while(rs.next()){
+            while(resultSet.next()){
                 Ticket ticket = new Ticket();
-                ticket.setId(rs.getInt("id"));
-                ticket.setAmount(rs.getDouble("amount"));
-                ticket.setUsername(rs.getString("username"));
-                ticket.setStatus(rs.getString("status"));
-                ticket.setDescription(rs.getString("description"));
+                ticket.setId(resultSet.getInt("id"));
+                ticket.setAmount(resultSet.getDouble("amount"));
+                ticket.setUsername(resultSet.getString("username"));
+                ticket.setStatus(resultSet.getString("status"));
+                ticket.setDescription(resultSet.getString("description"));
                 ticketList.add(ticket);
             }
             return ticketList;
@@ -119,16 +119,16 @@ public class TicketDAOPostgres implements TicketDAO{
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
 
-            ResultSet rs = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             List<Ticket> ticketList = new ArrayList<>();
-            while(rs.next()){
+            while(resultSet.next()){
                 Ticket ticket = new Ticket();
-                ticket.setId(rs.getInt("id"));
-                ticket.setAmount(rs.getDouble("amount"));
-                ticket.setUsername(rs.getString("username"));
-                ticket.setStatus(rs.getString("status"));
-                ticket.setDescription(rs.getString("description"));
+                ticket.setId(resultSet.getInt("id"));
+                ticket.setAmount(resultSet.getDouble("amount"));
+                ticket.setUsername(resultSet.getString("username"));
+                ticket.setStatus(resultSet.getString("status"));
+                ticket.setDescription(resultSet.getString("description"));
                 ticketList.add(ticket);
             }
             return ticketList;
@@ -147,16 +147,16 @@ public class TicketDAOPostgres implements TicketDAO{
             preparedStatement.setString(1,filter);
             preparedStatement.setInt(2, id);
 
-            ResultSet rs = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             List<Ticket> ticketList = new ArrayList<>();
-            while(rs.next()){
+            while(resultSet.next()){
                 Ticket ticket = new Ticket();
-                ticket.setId(rs.getInt("id"));
-                ticket.setAmount(rs.getDouble("amount"));
-                ticket.setUsername(rs.getString("username"));
-                ticket.setStatus(rs.getString("status"));
-                ticket.setDescription(rs.getString("description"));
+                ticket.setId(resultSet.getInt("id"));
+                ticket.setAmount(resultSet.getDouble("amount"));
+                ticket.setUsername(resultSet.getString("username"));
+                ticket.setStatus(resultSet.getString("status"));
+                ticket.setDescription(resultSet.getString("description"));
                 ticketList.add(ticket);
             }
             return ticketList;

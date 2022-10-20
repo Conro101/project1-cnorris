@@ -1,5 +1,6 @@
 package dev.norris.repositories;
 
+import dev.norris.driver.Driver;
 import dev.norris.entities.Employee;
 import dev.norris.util.ConnectionFactory;
 
@@ -32,14 +33,53 @@ public class EmployeeDAOPostgres implements EmployeeDAO{
     }
 
     @Override
-    public Employee loginEmployee(Employee employee){
-        return null;
+    public boolean loginEmployee(Employee employee){
+        try(Connection connection = ConnectionFactory.getConnection()){
+            String sql = "select * from employees where username = ?, password = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setString(1, employee.getUsername());
+            preparedStatement.setString(2, employee.getPassword());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+
+            Employee loggedEmployee = new Employee();
+            loggedEmployee.setId(resultSet.getInt("id"));
+            loggedEmployee.setUsername(resultSet.getString("username"));
+            loggedEmployee.setPassword(resultSet.getString("password"));
+            loggedEmployee.setManager(resultSet.getBoolean("manager"));
+            Driver.currentEmployee = loggedEmployee;
+            return true;
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public Employee getEmployeeById(int id) {
+        try(Connection connection = ConnectionFactory.getConnection()){
+            String sql = "select * from employees where id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1,id);
 
-        return null;
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+
+            Employee employee = new Employee();
+            employee.setId(resultSet.getInt("id"));
+            employee.setUsername(resultSet.getString("username"));
+            employee.setPassword(resultSet.getString("password"));
+            employee.setManager(resultSet.getBoolean("manager"));
+
+            return employee;
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
