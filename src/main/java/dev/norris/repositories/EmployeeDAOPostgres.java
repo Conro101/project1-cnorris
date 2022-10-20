@@ -32,17 +32,25 @@ public class EmployeeDAOPostgres implements EmployeeDAO{
     }
 
     @Override
+    public Employee loginEmployee(Employee employee){
+        return null;
+    }
+
+    @Override
     public Employee getEmployeeById(int id) {
+
         return null;
     }
 
     @Override
     public Employee updateEmployee(Employee employee) {
+
         return null;
     }
 
     @Override
     public boolean deleteEmployeeById(int id) {
+
         return false;
     }
 }

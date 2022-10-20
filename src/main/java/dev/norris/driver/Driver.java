@@ -2,6 +2,7 @@ package dev.norris.driver;
 
 import dev.norris.controllers.EmployeeController;
 import dev.norris.controllers.TicketController;
+import dev.norris.entities.Employee;
 import dev.norris.repositories.EmployeeDAOPostgres;
 import dev.norris.repositories.TicketDAOPostgres;
 import dev.norris.services.EmployeeService;
@@ -12,6 +13,7 @@ import io.javalin.Javalin;
 
 
 public class Driver {
+    public static Employee currentEmployee;
     public static EmployeeService employeeService = new EmployeeServiceImpl(new EmployeeDAOPostgres());
     public static TicketService ticketService = new TicketServiceImpl(new TicketDAOPostgres());
     public static void main(String[] args) {
@@ -21,6 +23,7 @@ public class Driver {
         TicketController ticketController = new TicketController();
 
         app.post("/employees", employeeController.createEmployee);
+        app.post("/login", employeeController.loginEmployee);
         app.post("/tickets", ticketController.createTicket);
 
         app.get("/employees", employeeController.getEmployeeById);

@@ -1,5 +1,6 @@
 package dev.norris.services;
 
+import dev.norris.driver.Driver;
 import dev.norris.entities.Ticket;
 import dev.norris.repositories.TicketDAO;
 
@@ -7,10 +8,6 @@ import java.util.List;
 
 public class TicketServiceImpl implements TicketService{
     private TicketDAO ticketDAO;
-
-    //These are placeholders. If/when user verification is implemented, these will be replaced
-    private boolean userLoggedIn = true;
-    private boolean userManager = true;
 
     public TicketServiceImpl(TicketDAO ticketDAO){
         this.ticketDAO = ticketDAO;
@@ -24,10 +21,10 @@ public class TicketServiceImpl implements TicketService{
         if(ticket.getUsername().length() == 0){
             throw new RuntimeException("Ticket must be attached to a user!");
         }
-        if(userLoggedIn != true){
+        if(Driver.currentEmployee == null){
             throw new RuntimeException("User is not logged in!");
         }
-        if(userManager == true){
+        if(Driver.currentEmployee.isManager() == true){
             throw new RuntimeException("Managers cannot log tickets!");
         }
         Ticket savedTicket = this.ticketDAO.createTicket(ticket);
@@ -36,18 +33,18 @@ public class TicketServiceImpl implements TicketService{
 
     @Override
     public Ticket getTicketById(int id) {
-        if(userLoggedIn != true){
-            throw new RuntimeException("Only users can get tickets!");
+        if(Driver.currentEmployee == null){
+            throw new RuntimeException("User is not logged in!");
         }
         return this.ticketDAO.getTicketById(id);
     }
 
     @Override
     public List<Ticket> getAllTickets() {
-        if (userLoggedIn != true){
-            throw new RuntimeException("Only users can get tickets!");
+        if (Driver.currentEmployee == null){
+            throw new RuntimeException("User is not logged in!");
         }
-        if(userManager != true){
+        if(Driver.currentEmployee.isManager() != true){
             throw new RuntimeException("Only managers can get all tickets!");
         }
         return this.ticketDAO.getAllTickets();
@@ -55,10 +52,10 @@ public class TicketServiceImpl implements TicketService{
 
     @Override
     public List<Ticket> getAllTicketsByFilter(String filter) {
-        if (userLoggedIn != true){
+        if (Driver.currentEmployee == null){
             throw new RuntimeException("Only users can get tickets!");
         }
-        if(userManager != true){
+        if(Driver.currentEmployee.isManager() != true){
             throw new RuntimeException("Only managers can get all tickets!");
         }
         return this.ticketDAO.getAllTicketsByFilter(filter);
@@ -66,24 +63,39 @@ public class TicketServiceImpl implements TicketService{
 
     @Override
     public List<Ticket> getAllTicketsById(int id) {
-        if (userLoggedIn != true){
-            throw new RuntimeException("Only users can get tickets!");
+        if (Driver.currentEmployee == null){
+            throw new RuntimeException("User is not logged in!");
         }
         return this.ticketDAO.getAllTicketsById(id);
     }
 
     @Override
     public List<Ticket> getAllTicketsByFilterAndId(String filter, int id){
-        return null;
+        if (Driver.currentEmployee == null){
+            throw new RuntimeException("User is not logged in!");
+        }
+        return this.ticketDAO.getAllTicketsByFilterAndId(filter,id);
     }
 
     @Override
     public Ticket updateTicket(Ticket ticket) {
-        return null;
+        if (Driver.currentEmployee == null){
+            throw new RuntimeException("User is not logged in!");
+        }
+        if(Driver.currentEmployee.isManager() != true){
+            throw new RuntimeException("Only managers can update tickets!");
+        }
+        return this.ticketDAO.updateTicket(ticket);
     }
 
     @Override
     public boolean deleteTicketById(int id) {
-        return false;
+        if (Driver.currentEmployee == null){
+            throw new RuntimeException("User is not logged in!");
+        }
+        if(Driver.currentEmployee.isManager() != true){
+            throw new RuntimeException("Only managers can update tickets!");
+        }
+        return this.ticketDAO.deleteTicketById(id);
     }
 }

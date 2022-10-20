@@ -13,6 +13,10 @@ public class EmployeeController {
         Employee employee = gson.fromJson(json, Employee.class);
     };
 
+    public Handler loginEmployee = (ctx) ->{
+
+    };
+
     public Handler getEmployeeById = (ctx) ->{
 
     };

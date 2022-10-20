@@ -23,6 +23,11 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
+    public Employee loginEmployee(Employee employee){
+        return null;
+    }
+
+    @Override
     public Employee getEmployeeById(int id) {
         return this.employeeDAO.getEmployeeById(id);
     }
