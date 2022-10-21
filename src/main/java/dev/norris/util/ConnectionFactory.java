@@ -7,21 +7,15 @@ import java.sql.SQLException;
 public class ConnectionFactory {
 
     public static Connection getConnection() throws SQLException {
-
+        String url = System.getenv("POSTGRES_SQL_DB");
+        String username = System.getenv("DB_USERNAME");
+        String password = System.getenv("PASSWORD");
         try {
-            Class.forName("org.postgresql.Driver");
+            return DriverManager.getConnection(url, username, password);
         }
-        catch (ClassNotFoundException e) {
-            System.out.println("CLASS WASN'T FOUND");
-            e.printStackTrace();
+        catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-
-        String url = "jdbc:postgresql://localhost:5432/postgres?currentSchema=practice";
-
-        String username = "postgres";
-        String password = "password";
-
-        return DriverManager.getConnection(url, username, password);
 
     }
 
