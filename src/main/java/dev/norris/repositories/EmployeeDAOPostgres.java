@@ -11,20 +11,28 @@ public class EmployeeDAOPostgres implements EmployeeDAO{
     @Override
     public Employee createEmployee(Employee employee) {
         try(Connection connection = ConnectionFactory.getConnection()){
-            //INSERT INTO employee VALUES (DEFAULT, "jsmith","password",false);
-            String sql = "insert into employees values(default, ?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, employee.getUsername());
-            preparedStatement.setString(2, employee.getPassword());
-            preparedStatement.setBoolean(3, employee.isManager());
+            String sqlGet = "select * from employees where username = ?";
+            PreparedStatement preparedStatementGet = connection.prepareStatement(sqlGet);
+            preparedStatementGet.setString(1, employee.getUsername());
 
-            preparedStatement.execute();
+            ResultSet resultSetGet = preparedStatementGet.executeQuery();
+            if(!resultSetGet.isBeforeFirst()){
+                System.out.println(resultSetGet.getString("username"));
+                //INSERT INTO employee VALUES (DEFAULT, "jsmith","password",false);
+                String sql = "insert into employees values(default, ?, ?, ?)";
+                PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                preparedStatement.setString(1, employee.getUsername());
+                preparedStatement.setString(2, employee.getPassword());
+                preparedStatement.setBoolean(3, employee.isManager());
 
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            resultSet.next();
-            int generatedKey = resultSet.getInt("id");
-            employee.setId(generatedKey);
-            return employee;
+                preparedStatement.execute();
+
+                ResultSet resultSet = preparedStatement.getGeneratedKeys();
+                resultSet.next();
+                int generatedKey = resultSet.getInt("id");
+                employee.setId(generatedKey);
+                return employee;
+            }
         }
         catch (SQLException e){
             e.printStackTrace();
@@ -35,14 +43,14 @@ public class EmployeeDAOPostgres implements EmployeeDAO{
     @Override
     public boolean loginEmployee(Employee employee){
         try(Connection connection = ConnectionFactory.getConnection()){
-            String sql = "select * from employees where username = ?, password = ?";
+            String sql = "select * from employees where username = ? and password = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setString(1, employee.getUsername());
             preparedStatement.setString(2, employee.getPassword());
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            if(!resultSet.isBeforeFirst()){
+            if(resultSet.isBeforeFirst()){
                 resultSet.next();
 
                 Employee loggedEmployee = new Employee();

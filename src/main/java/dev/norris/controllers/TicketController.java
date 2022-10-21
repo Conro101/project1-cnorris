@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import dev.norris.driver.Driver;
 import dev.norris.entities.Ticket;
 import io.javalin.http.Handler;
-import org.eclipse.jetty.util.DateCache;
 
 import java.util.List;
 
@@ -42,18 +41,18 @@ public class TicketController {
         ctx.status(200);
         ctx.result(json);
     };
-    public Handler getAllTicketsById = (ctx) ->{
-        int id = Integer.parseInt(ctx.pathParam("id"));
-        List<Ticket> tickets = Driver.ticketService.getAllTicketsById(id);
+    public Handler getAllTicketsByUsername = (ctx) ->{
+        String username = ctx.pathParam("username");
+        List<Ticket> tickets = Driver.ticketService.getAllTicketsByUsername(username);
         Gson gson = new Gson();
         String json = gson.toJson(tickets);
         ctx.status(200);
         ctx.result(json);
     };
-    public Handler getAllTicketsByFilterAndId = ctx ->{
+    public Handler getAllTicketsByFilterAndUsername = ctx ->{
         String filter = ctx.pathParam("filter");
-        int id = Integer.parseInt(ctx.pathParam("id"));
-        List<Ticket> tickets = Driver.ticketService.getAllTicketsByFilterAndId(filter,id);
+        String username = ctx.pathParam("username");
+        List<Ticket> tickets = Driver.ticketService.getAllTicketsByFilterAndUsername(filter,username);
         Gson gson = new Gson();
         String json = gson.toJson(tickets);
         ctx.status(200);

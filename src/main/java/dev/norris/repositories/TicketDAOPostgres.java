@@ -112,11 +112,11 @@ public class TicketDAOPostgres implements TicketDAO{
     }
 
     @Override
-    public List<Ticket> getAllTicketsById(int id) {
+    public List<Ticket> getAllTicketsByUsername(String username) {
         try(Connection connection = ConnectionFactory.getConnection()){
-            String sql = "select * from tickets where id = ?";
+            String sql = "select * from tickets where username = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setString(1, username);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -139,12 +139,12 @@ public class TicketDAOPostgres implements TicketDAO{
     }
 
     @Override
-    public List<Ticket> getAllTicketsByFilterAndId(String filter, int id){
+    public List<Ticket> getAllTicketsByFilterAndUsername(String filter, String username){
         try(Connection connection = ConnectionFactory.getConnection()){
-            String sql = "select * from tickets where filter = ? and id = ?";
+            String sql = "select * from tickets where filter = ? and username = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,filter);
-            preparedStatement.setInt(2, id);
+            preparedStatement.setString(2, username);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 

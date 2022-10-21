@@ -61,19 +61,19 @@ public class TicketServiceImpl implements TicketService{
     }
 
     @Override
-    public List<Ticket> getAllTicketsById(int id) {
+    public List<Ticket> getAllTicketsByUsername(String username) {
         if (Driver.currentEmployee == null){
             throw new RuntimeException("User is not logged in!");
         }
-        return this.ticketDAO.getAllTicketsById(id);
+        return this.ticketDAO.getAllTicketsByUsername(username);
     }
 
     @Override
-    public List<Ticket> getAllTicketsByFilterAndId(String filter, int id){
+    public List<Ticket> getAllTicketsByFilterAndUsername(String filter, String username){
         if (Driver.currentEmployee == null){
             throw new RuntimeException("User is not logged in!");
         }
-        return this.ticketDAO.getAllTicketsByFilterAndId(filter,id);
+        return this.ticketDAO.getAllTicketsByFilterAndUsername(filter,username);
     }
 
     @Override

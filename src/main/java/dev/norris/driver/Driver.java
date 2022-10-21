@@ -26,18 +26,18 @@ public class Driver {
         app.post("/login", employeeController.loginEmployee);
         app.post("/tickets", ticketController.createTicket);
 
-        app.get("/employees", employeeController.getEmployeeById);
+        app.get("/employees/{id}", employeeController.getEmployeeById);
         app.get("/tickets", ticketController.getAllTickets);
         app.get("/tickets/{id}", ticketController.getTicketById);
         app.get("/tickets/{filter}", ticketController.getAllTicketsByFilter);
-        app.get("/employees/tickets/{id}", ticketController.getAllTicketsById);
-        app.get("/employees/tickets/{id}/{filter}", ticketController.getAllTicketsByFilterAndId);
+        app.get("/employees/tickets/{username}", ticketController.getAllTicketsByUsername);
+        app.get("/employees/tickets/{username}/{filter}", ticketController.getAllTicketsByFilterAndUsername);
 
         app.put("/employees", employeeController.updateEmployee);
         app.put("/tickets", ticketController.updateTicket);
 
-        app.delete("/employees", employeeController.deleteEmployeeById);
-        app.delete("/tickets", ticketController.deleteTicketById);
+        app.delete("/employees/{id}", employeeController.deleteEmployeeById);
+        app.delete("/tickets/{id}", ticketController.deleteTicketById);
 
         app.start();
 
