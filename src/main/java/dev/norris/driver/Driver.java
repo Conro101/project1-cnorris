@@ -29,7 +29,7 @@ public class Driver {
         app.get("/employees/{id}", employeeController.getEmployeeById);
         app.get("/tickets", ticketController.getAllTickets);
         app.get("/tickets/{id}", ticketController.getTicketById);
-        app.get("/tickets/{filter}", ticketController.getAllTicketsByFilter);
+        app.get("/tickets/filter/{filter}", ticketController.getAllTicketsByFilter);
         app.get("/employees/tickets/{username}", ticketController.getAllTicketsByUsername);
         app.get("/employees/tickets/{username}/{filter}", ticketController.getAllTicketsByFilterAndUsername);
 

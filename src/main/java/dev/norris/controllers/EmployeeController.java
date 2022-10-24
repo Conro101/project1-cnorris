@@ -12,9 +12,15 @@ public class EmployeeController {
         Gson gson = new Gson();
         Employee employee = gson.fromJson(employeeJson, Employee.class);
         Employee registeredEmployee = Driver.employeeService.createEmployee(employee);
-        String json = gson.toJson(registeredEmployee);
-        ctx.status(201);
-        ctx.result(json);
+        if(registeredEmployee.getUsername().length() != 0){
+            String json = gson.toJson(registeredEmployee);
+            ctx.status(201);
+            ctx.result(json);
+        }
+        else {
+            ctx.status(400);
+            ctx.result("User already exists!");
+        }
     };
 
     public Handler loginEmployee = (ctx) ->{

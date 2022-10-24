@@ -16,8 +16,8 @@ public class EmployeeDAOPostgres implements EmployeeDAO{
             preparedStatementGet.setString(1, employee.getUsername());
 
             ResultSet resultSetGet = preparedStatementGet.executeQuery();
+            resultSetGet.next();
             if(!resultSetGet.isBeforeFirst()){
-                System.out.println(resultSetGet.getString("username"));
                 //INSERT INTO employee VALUES (DEFAULT, "jsmith","password",false);
                 String sql = "insert into employees values(default, ?, ?, ?)";
                 PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -32,6 +32,9 @@ public class EmployeeDAOPostgres implements EmployeeDAO{
                 int generatedKey = resultSet.getInt("id");
                 employee.setId(generatedKey);
                 return employee;
+            }
+            else{
+                return new Employee();
             }
         }
         catch (SQLException e){

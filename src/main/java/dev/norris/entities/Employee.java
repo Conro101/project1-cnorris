@@ -47,7 +47,7 @@ public class Employee {
     }
 
     public void setManager(boolean manager) {
-        manager = manager;
+        this.manager = manager;
     }
 
     @Override

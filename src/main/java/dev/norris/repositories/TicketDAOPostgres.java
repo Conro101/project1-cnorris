@@ -87,7 +87,7 @@ public class TicketDAOPostgres implements TicketDAO{
     @Override
     public List<Ticket> getAllTicketsByFilter(String filter) {
         try(Connection connection = ConnectionFactory.getConnection()){
-            String sql = "select * from tickets where filter = ?";
+            String sql = "select * from tickets where status = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, filter);
 
@@ -141,7 +141,7 @@ public class TicketDAOPostgres implements TicketDAO{
     @Override
     public List<Ticket> getAllTicketsByFilterAndUsername(String filter, String username){
         try(Connection connection = ConnectionFactory.getConnection()){
-            String sql = "select * from tickets where filter = ? and username = ?";
+            String sql = "select * from tickets where status = ? and username = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,filter);
             preparedStatement.setString(2, username);
@@ -169,15 +169,20 @@ public class TicketDAOPostgres implements TicketDAO{
     @Override
     public Ticket updateTicket(Ticket ticket) {
         try(Connection connection = ConnectionFactory.getConnection()){
-            String sql = "update tickets set amount = ?, username = ?, status = ?, description = ? where id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setDouble(1, ticket.getAmount());
-            preparedStatement.setString(2, ticket.getUsername());
-            preparedStatement.setString(3, ticket.getStatus());
-            preparedStatement.setString(4, ticket.getDescription());
-            preparedStatement.setInt(5, ticket.getId());
+            Ticket testTicket = this.getTicketById(ticket.getId());
+            System.out.println(testTicket.getStatus());
 
-            preparedStatement.executeUpdate();
+            if(testTicket.getStatus().equals("Pending")){
+                String sql = "update tickets set amount = ?, username = ?, status = ?, description = ? where id = ?";
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setDouble(1, ticket.getAmount());
+                preparedStatement.setString(2, ticket.getUsername());
+                preparedStatement.setString(3, ticket.getStatus());
+                preparedStatement.setString(4, ticket.getDescription());
+                preparedStatement.setInt(5, ticket.getId());
+
+                preparedStatement.executeUpdate();
+            }
             return ticket;
         }
         catch (SQLException e){

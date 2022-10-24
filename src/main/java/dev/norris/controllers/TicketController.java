@@ -34,7 +34,10 @@ public class TicketController {
         ctx.result(json);
     };
     public Handler getAllTicketsByFilter = (ctx) ->{
+        System.out.println("Ready!");
+        System.out.println(ctx.pathParam("filter"));
         String filter = ctx.pathParam("filter");
+        System.out.println(filter);
         List<Ticket> tickets = Driver.ticketService.getAllTicketsByFilter(filter);
         Gson gson = new Gson();
         String json = gson.toJson(tickets);

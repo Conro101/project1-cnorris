@@ -15,17 +15,24 @@ public class TicketServiceImpl implements TicketService{
 
     @Override
     public Ticket createTicket(Ticket ticket) {
+        if(Driver.currentEmployee == null){
+            throw new RuntimeException("User is not logged in!");
+        }
+        if(Driver.currentEmployee.isManager()){
+            throw new RuntimeException("Managers cannot log tickets!");
+        }
         if(ticket.getAmount() <= 0.00){
             throw new RuntimeException("Ticket must have a positive value!");
         }
         if(ticket.getUsername().length() == 0){
             throw new RuntimeException("Ticket must be attached to a user!");
         }
-        if(Driver.currentEmployee == null){
-            throw new RuntimeException("User is not logged in!");
+        System.out.println(ticket.getStatus());
+        if(!ticket.getStatus().equals("Pending")){
+            throw new RuntimeException("New tickets must be set to Pending!");
         }
-        if(Driver.currentEmployee.isManager()){
-            throw new RuntimeException("Managers cannot log tickets!");
+        if(ticket.getDescription().length() == 0){
+            throw new RuntimeException("Ticket must have a description!");
         }
         return this.ticketDAO.createTicket(ticket);
     }
@@ -83,6 +90,10 @@ public class TicketServiceImpl implements TicketService{
         }
         if(!Driver.currentEmployee.isManager()){
             throw new RuntimeException("Only managers can update tickets!");
+        }
+        System.out.println(ticket.getStatus());
+        if(!ticket.getStatus().equals("Pending") && !ticket.getStatus().equals("Approved") && !ticket.getStatus().equals("Denied")){
+            throw new RuntimeException("Invalid status!");
         }
         return this.ticketDAO.updateTicket(ticket);
     }
