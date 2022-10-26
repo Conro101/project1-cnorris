@@ -22,17 +22,24 @@ public class TicketServiceImpl implements TicketService{
             throw new RuntimeException("Managers cannot log tickets!");
         }
         if(ticket.getAmount() <= 0.00){
-            throw new RuntimeException("Ticket must have a positive value!");
+            Ticket fakeTicket = new Ticket();
+            fakeTicket.setId(-1);
+            return fakeTicket;
         }
         if(ticket.getUsername().length() == 0){
-            throw new RuntimeException("Ticket must be attached to a user!");
+            Ticket fakeTicket = new Ticket();
+            fakeTicket.setId(-2);
+            return fakeTicket;
         }
-        System.out.println(ticket.getStatus());
         if(!ticket.getStatus().equals("Pending")){
-            throw new RuntimeException("New tickets must be set to Pending!");
+            Ticket fakeTicket = new Ticket();
+            fakeTicket.setId(-3);
+            return fakeTicket;
         }
         if(ticket.getDescription().length() == 0){
-            throw new RuntimeException("Ticket must have a description!");
+            Ticket fakeTicket = new Ticket();
+            fakeTicket.setId(-4);
+            return fakeTicket;
         }
         return this.ticketDAO.createTicket(ticket);
     }

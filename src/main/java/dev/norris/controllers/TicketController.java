@@ -14,9 +14,29 @@ public class TicketController {
         Gson gson = new Gson();
         Ticket ticket = gson.fromJson(ticketJson, Ticket.class);
         Ticket registeredTicket = Driver.ticketService.createTicket(ticket);
-        String json = gson.toJson(registeredTicket);
-        ctx.status(201);
-        ctx.result(json);
+        switch (registeredTicket.getId()){
+            case -1:
+                ctx.status(400);
+                ctx.result("Request has an invalid amount.");
+                break;
+            case -2:
+                ctx.status(400);
+                ctx.result("Request has no user attached.");
+                break;
+            case -3:
+                ctx.status(400);
+                ctx.result("Request has an invalid status.");
+                break;
+            case -4:
+                ctx.status(400);
+                ctx.result("Request must include a description.");
+                break;
+            default:
+                String json = gson.toJson(registeredTicket);
+                ctx.status(201);
+                ctx.result(json);
+                break;
+        }
     };
     public Handler getTicketById = (ctx) ->{
         int id = Integer.parseInt(ctx.pathParam("id"));
