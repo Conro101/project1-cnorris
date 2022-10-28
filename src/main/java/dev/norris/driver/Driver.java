@@ -32,6 +32,7 @@ public class Driver {
         app.get("/tickets/filter/{filter}", ticketController.getAllTicketsByFilter);
         app.get("/employees/tickets/{username}", ticketController.getAllTicketsByUsername);
         app.get("/employees/tickets/{username}/{filter}", ticketController.getAllTicketsByFilterAndUsername);
+        app.get("/logout", employeeController.logoutEmployee);
 
         app.put("/employees", employeeController.updateEmployee);
         app.put("/tickets", ticketController.updateTicket);

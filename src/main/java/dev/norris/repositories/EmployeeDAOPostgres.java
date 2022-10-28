@@ -16,8 +16,8 @@ public class EmployeeDAOPostgres implements EmployeeDAO{
             preparedStatementGet.setString(1, employee.getUsername());
 
             ResultSet resultSetGet = preparedStatementGet.executeQuery();
-            resultSetGet.next();
-            if(!resultSetGet.isBeforeFirst()){
+
+            if(!resultSetGet.next()){
                 //INSERT INTO employee VALUES (DEFAULT, "jsmith","password",false);
                 String sql = "insert into employees values(default, ?, ?, ?)";
                 PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -34,7 +34,9 @@ public class EmployeeDAOPostgres implements EmployeeDAO{
                 return employee;
             }
             else{
-                return new Employee();
+                Employee fakeEmployee = new Employee();
+                fakeEmployee.setId(-1);
+                return fakeEmployee;
             }
         }
         catch (SQLException e){
@@ -121,7 +123,7 @@ public class EmployeeDAOPostgres implements EmployeeDAO{
     @Override
     public boolean deleteEmployeeById(int id) {
         try(Connection connection = ConnectionFactory.getConnection()){
-            String sql = "delete from employees where id = ?";
+            String sql = "delete from 'employees' where id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setInt(1,id);

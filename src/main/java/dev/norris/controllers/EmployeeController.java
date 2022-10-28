@@ -12,14 +12,14 @@ public class EmployeeController {
         Gson gson = new Gson();
         Employee employee = gson.fromJson(employeeJson, Employee.class);
         Employee registeredEmployee = Driver.employeeService.createEmployee(employee);
-        if(registeredEmployee.getUsername().length() != 0){
+        if(registeredEmployee == null || registeredEmployee.getId() == -1){
+            ctx.status(400);
+            ctx.result("User already exists!");
+        }
+        else {
             String json = gson.toJson(registeredEmployee);
             ctx.status(201);
             ctx.result(json);
-        }
-        else {
-            ctx.status(400);
-            ctx.result("User already exists!");
         }
     };
 
@@ -67,5 +67,10 @@ public class EmployeeController {
             ctx.status(400);
             ctx.result("Delete request could not be processed");
         }
+    };
+
+    public Handler logoutEmployee = (ctx) ->{
+      Driver.currentEmployee = null;
+      ctx.result("Current Employee is Null.");
     };
 }

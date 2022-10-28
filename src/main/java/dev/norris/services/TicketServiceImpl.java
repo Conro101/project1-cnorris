@@ -36,7 +36,7 @@ public class TicketServiceImpl implements TicketService{
             fakeTicket.setId(-3);
             return fakeTicket;
         }
-        if(ticket.getDescription().length() == 0){
+        if(ticket.getDescription() == null){
             Ticket fakeTicket = new Ticket();
             fakeTicket.setId(-4);
             return fakeTicket;
